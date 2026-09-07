@@ -3,6 +3,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from app.routes import router
+from app.database import Base,engine
 
 app = FastAPI()
 
@@ -19,6 +20,7 @@ def welcome():
     return {"messege":"Hi KKK"}
 
 BASE_DIR = Path(__file__).resolve().parent
+Base.metadata.create_all(bind=engine)
 
 @app.get("/", include_in_schema=False)
 def show_frontend():
